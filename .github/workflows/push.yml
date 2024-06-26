@@ -24,9 +24,10 @@ jobs:
     steps:
       - name: Checking out code
         uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ secrets.GH_PAT }}
+# Do not run Grunt on submodules for now, until we are ready to fix these submodules
+#        with:
+#          submodules: true
+#          token: ${{ secrets.GH_PAT }}
 
       - name: Configuring node & npm
         uses: actions/setup-node@v4
