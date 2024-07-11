@@ -18,7 +18,7 @@ services:
     
   db:
     #image: "tugboatqa/mariadb:10.7"
-    image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}""
+    image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}"
     command: >
               --character-set-server=utf8mb4
               --collation-server=utf8mb4_bin
