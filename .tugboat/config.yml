@@ -13,8 +13,12 @@ services:
       MOODLE_DOCKER_BROWSER: firefox
     commands:
       init:
-        - ln -snf "$TUGBOAT_ROOT/moodle" "/var/www/html"
+        # Link the document root to the expected path. This example links /moodle
+        # to the docroot.
+        #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
+        - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
       update:
+        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
   db:
     image: "tugboatqa/mariadb:10.7"
@@ -30,5 +34,5 @@ services:
       MYSQL_DATABASE: "moodle"
       MYSQL_USER: "moodle"
       MYSQL_PASSWORD: "m@0dl3ing"
-    ports:
-      - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
+    #ports:
+    #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
