@@ -1,7 +1,7 @@
 services:
   webserver:
-    image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
-    #image: "tugboatqa/php:8-apache"
+    #image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
+    image: "tugboatqa/php:8-apache"
     default: true
     depends_on:
       - db
@@ -17,8 +17,8 @@ services:
       update:
     
   db:
-    #image: "tugboatqa/mariadb:10.7"
-    image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}"
+    image: "tugboatqa/mariadb:10.7"
+    #image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}"
     command: >
               --character-set-server=utf8mb4
               --collation-server=utf8mb4_bin
