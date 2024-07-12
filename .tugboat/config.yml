@@ -24,7 +24,7 @@ services:
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
 
         - echo "php extensions"
-        - php -i
+        - php -m
         
         - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
@@ -37,9 +37,10 @@ services:
 
         - pwd
         - cd ${DOCROOT}
+        - pwd
 
         # Install/update packages managed by composer, including drush.
-        - composer install --optimize-autoloader       
+        - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
         
       #update:
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
