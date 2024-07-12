@@ -20,13 +20,21 @@ services:
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        
+        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+        
+        #make required dirs and set permissions.
         - mkdir /var/www/moodledata
         - mkdir /var/www/phpunitdata
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
-      update:
-        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+
+        # Install/update packages managed by composer, including drush.
+        - composer install --optimize-autoloader       
+        
+      #update:
+      #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
   db:
     image: "tugboatqa/mariadb:10.7"
