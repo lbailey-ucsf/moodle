@@ -17,8 +17,9 @@ services:
     commands:
       init:
         - echo "initializing webserver"
-
+        - env
         - export MOODLE_DOCKER_DBTYBE=mariadb
+        - env
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
@@ -44,6 +45,12 @@ services:
         # Install/update packages managed by composer, including drush.
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
         
+      build:
+        - echo "building..."
+        - env
+        - export MOODLE_DOCKER_DBTYBE=mariadb
+        - echo "env again in build"
+        - end
       #update:
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
