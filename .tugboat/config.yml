@@ -17,6 +17,8 @@ services:
     commands:
       init:
         - echo "initializing webserver"
+
+        - export MOODLE_DOCKER_DBTYBE=mariadb
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
