@@ -13,7 +13,7 @@ services:
       MOODLE_DOCKER_BROWSER: firefox
     commands:
       init:
-        - ln -snf "$TUGBOAT_ROOT/moodle" "${DOCROOT}"
+        - ln -snf "$TUGBOAT_ROOT/docroot" "${DOCROOT}"
       update:
     
   db:
