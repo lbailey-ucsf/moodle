@@ -19,6 +19,11 @@ services:
         - echo "initializing webserver"
         - env
         - export MOODLE_DOCKER_DBTYBE=mariadb
+        - export MOODLE_DOCKER_DB=mariadb        
+        - export MOODLE_DOCKER_DBCOLLATION=utf8mb4_bin
+        - export MOODLE_DOCKER_DBNAME=moodle
+        - export MOODLE_DOCKER_DBUSER=moodle
+        - export MOODLE_DOCKER_DBPASS=m@0dl3ing
         - env
         
         # Link the document root to the expected path. This example links /moodle
@@ -50,7 +55,7 @@ services:
         - env
         - export MOODLE_DOCKER_DBTYBE=mariadb
         - echo "env again in build"
-        - end
+        - env
       #update:
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
