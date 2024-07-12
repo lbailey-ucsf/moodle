@@ -17,6 +17,8 @@ services:
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        - mkdir /var/www/moodledata
+        - chmod 0777 /var/www/moodledata
       update:
         - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
