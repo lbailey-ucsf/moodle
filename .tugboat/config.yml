@@ -16,10 +16,15 @@ services:
       MOODLE_DOCKER_BROWSER: firefox
     commands:
       init:
+        - echo "initializing webserver"
+        
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+
+        - echo "php extensions"
+        - php -i
         
         - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
@@ -29,6 +34,9 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
+
+        - pwd
+        - cd ${DOCROOT}
 
         # Install/update packages managed by composer, including drush.
         - composer install --optimize-autoloader       
