@@ -7,6 +7,8 @@ services:
       - db
     environment:
       MOODLE_DOCKER_RUNNING: 1
+      MOODLE_DOCKER_DB: mariadb
+      MOODLE_DOCKER_DBTYBE: mariadb
       MOODLE_DOCKER_DBNAME: moodle
       MOODLE_DOCKER_DBUSER: moodle
       MOODLE_DOCKER_DBPASS: "m@0dl3ing"
@@ -18,6 +20,9 @@ services:
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         - mkdir /var/www/moodledata
+        - mkdir /var/www/phpunitdata
+        - mkdir /var/www/behatdata
+        - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
       update:
         - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
