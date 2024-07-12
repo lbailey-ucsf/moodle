@@ -8,7 +8,7 @@ services:
     environment:
       MOODLE_DOCKER_RUNNING: 1
       MOODLE_DOCKER_DB: mariadb
-      MOODLE_DOCKER_DBTYBE: mariadb     
+      MOODLE_DOCKER_DBTYPE: mariadb     
       MOODLE_DOCKER_DBCOLLATION: utf8mb4_bin
       MOODLE_DOCKER_DBNAME: moodle
       MOODLE_DOCKER_DBUSER: moodle
@@ -18,7 +18,7 @@ services:
       init:
         - echo "initializing webserver"
         - env
-        - export MOODLE_DOCKER_DBTYBE=mariadb
+        - export MOODLE_DOCKER_DBTYPE=mariadb
         - export MOODLE_DOCKER_DB=mariadb        
         - export MOODLE_DOCKER_DBCOLLATION=utf8mb4_bin
         - export MOODLE_DOCKER_DBNAME=moodle
