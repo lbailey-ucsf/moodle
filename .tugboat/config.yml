@@ -27,6 +27,13 @@ services:
         - export MOODLE_DOCKER_DBPASS=m@0dl3ing
         - env
         
+        - echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBCOLLATION utf8mb4_bin" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBNAME moodle" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBUSER moodle" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBPASS m@0dl3ing" >> /etc/apache2/conf-available/env.conf
+      
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
