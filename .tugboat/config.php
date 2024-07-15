@@ -15,6 +15,7 @@ $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
 echo "dbtype...";
 print_r($CFG->dbtype);
+phpinfo();
 
 if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
     $CFG->dboptions['extrainfo'] = [
