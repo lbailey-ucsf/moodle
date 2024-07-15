@@ -52,8 +52,8 @@ services:
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
         
       build:
-        - npm install
-        - npx grunt
+      #  - npm install
+      #  - npx grunt
         
       #update:
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
