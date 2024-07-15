@@ -34,6 +34,9 @@ services:
         - echo "SetEnv MOODLE_DOCKER_DBUSER moodle" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBPASS m@0dl3ing" >> /etc/apache2/conf-available/env.conf
         - service apache2 reload
+
+        - sudo apt-get update
+        - sudo apt-get install php8.0-mysql
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
