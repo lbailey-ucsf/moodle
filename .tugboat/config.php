@@ -13,9 +13,9 @@ $CFG->dbpass    = 'm@0dl3ing';
 $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
-echo "dbtype...";
-print_r($CFG->dbtype);
-phpinfo();
+//echo "dbtype...";
+//print_r($CFG->dbtype);
+//phpinfo();
 
 if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
     $CFG->dboptions['extrainfo'] = [
@@ -87,7 +87,7 @@ $CFG->behat_profiles = array(
 $CFG->behat_faildump_path = '/var/www/behatfaildumps';
 
 define('PHPUNIT_LONGTEST', true);
-
+/*
 if (getenv('MOODLE_DOCKER_APP')) {
     $appport = getenv('MOODLE_DOCKER_APP_PORT') ?: 8100;
     $protocol = getenv('MOODLE_DOCKER_APP_PROTOCOL') ?: 'https';
@@ -142,5 +142,5 @@ if (getenv('MOODLE_DOCKER_BBB_MOCK')) {
 if (getenv('MOODLE_DOCKER_MATRIX_MOCK')) {
     define('TEST_COMMUNICATION_MATRIX_MOCK_SERVER', "http://matrixmock/{$mockhash}");
 }
-
+*/
 require_once(__DIR__ . '/lib/setup.php');
