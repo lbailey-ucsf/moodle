@@ -16,10 +16,11 @@ services:
       MOODLE_DOCKER_BROWSER: firefox
     commands:
       init:
-        - echo "initializing webserver"
+        - echo "****** initializing webserver *****"
+        
         - env
         - export MOODLE_DOCKER_DBTYPE=mariadb
-        - export MOODLE_DOCKER_DB=mariadb        
+        - export MOODLE_DOCKER_DB=mysql        
         - export MOODLE_DOCKER_DBCOLLATION=utf8mb4_bin
         - export MOODLE_DOCKER_DBNAME=moodle
         - export MOODLE_DOCKER_DBUSER=moodle
@@ -51,23 +52,22 @@ services:
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
         
       build:
-        - echo "building..."
-        - env
-        - export MOODLE_DOCKER_DBTYBE=mariadb
-        - echo "env again in build"
-        - env
+        - npm install
+        - npx grunt
+        
       #update:
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
   db:
     image: "tugboatqa/mariadb:10.7"
     #image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}"
-    command: >
-              --character-set-server=utf8mb4
-              --collation-server=utf8mb4_bin
-              --innodb_file_per_table=On
-              --wait-timeout=28800
-              --skip-log-bin
+    commands:
+      init:
+        - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
+        - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
+        - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
+        - mysql -e "SET GLOBAL wait_timeout=28800;"
+        - mysql -e "SET GLOBAL skip_log_bin=ON;"
     environment:
       MYSQL_ROOT_PASSWORD: "m@0dl3ing"
       MYSQL_DATABASE: "moodle"
