@@ -21,7 +21,8 @@ services:
         - sudo apt-get update
         #- sudo apt-get install php-mysql
         #- sudo apt-get install default-mysql-client
-        - sudo apt-get install mariadb-client
+        - sudo apt-get --with-mysqli install mariadb-client
+        #- docker-php-ext-install mysqli
         
         - echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
