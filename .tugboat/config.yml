@@ -19,7 +19,9 @@ services:
         - echo "****** initializing webserver *****"
         
         - sudo apt-get update
-        - sudo apt-get install php-mysql
+        #- sudo apt-get install php-mysql
+        #- sudo apt-get install default-mysql-client
+        - sudo apt-get install mariadb-client
         
         - echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
