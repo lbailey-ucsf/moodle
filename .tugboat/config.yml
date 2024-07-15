@@ -18,14 +18,8 @@ services:
       init:
         - echo "****** initializing webserver *****"
         
-        - env
-        - export MOODLE_DOCKER_DBTYPE=mariadb
-        - export MOODLE_DOCKER_DB=mysql        
-        - export MOODLE_DOCKER_DBCOLLATION=utf8mb4_bin
-        - export MOODLE_DOCKER_DBNAME=moodle
-        - export MOODLE_DOCKER_DBUSER=moodle
-        - export MOODLE_DOCKER_DBPASS=m@0dl3ing
-        - env
+        - sudo apt-get update
+        - sudo apt-get install php8.0-mysql
         
         - echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
@@ -35,8 +29,7 @@ services:
         - echo "SetEnv MOODLE_DOCKER_DBPASS m@0dl3ing" >> /etc/apache2/conf-available/env.conf
         - service apache2 reload
 
-        - sudo apt-get update
-        - sudo apt-get install php-mysqli
+
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
@@ -54,10 +47,6 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
-
-        - pwd
-        - cd ${DOCROOT}
-        - pwd
 
         # Install/update packages managed by composer, including drush.
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
