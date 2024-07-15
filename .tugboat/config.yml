@@ -36,7 +36,7 @@ services:
         - service apache2 reload
 
         - sudo apt-get update
-        - sudo apt-get install php8.0-mysql
+        - sudo apt-get install php-mysqli
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
