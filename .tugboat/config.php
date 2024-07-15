@@ -15,7 +15,7 @@ $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
 //echo "dbtype...";
 //print_r($CFG->dbtype);
-//phpinfo();
+phpinfo();
 
 if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
     $CFG->dboptions['extrainfo'] = [
@@ -24,7 +24,7 @@ if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
         'Encrypt' => false,
     ];
 }
-/*
+
 if (empty($_SERVER['HTTP_HOST'])) {
     $_SERVER['HTTP_HOST'] = 'localhost';
 }
@@ -51,7 +51,7 @@ if (strpos($_SERVER['HTTP_HOST'], '.gitpod.io') !== false) {
         }
     }
 }
-*/
+
 
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';
