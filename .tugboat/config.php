@@ -4,12 +4,12 @@ unset($CFG);
 global $CFG;
 $CFG = new stdClass();
 
-$CFG->dbtype    = getenv('MOODLE_DOCKER_DBTYPE');
+$CFG->dbtype    = 'mariadb';
 $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'db';
-$CFG->dbname    = getenv('MOODLE_DOCKER_DBNAME');
-$CFG->dbuser    = getenv('MOODLE_DOCKER_DBUSER');
-$CFG->dbpass    = getenv('MOODLE_DOCKER_DBPASS');
+$CFG->dbname    = 'moodle';
+$CFG->dbuser    = 'moodle';
+$CFG->dbpass    = 'm@0dl3ing';
 $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
@@ -24,7 +24,7 @@ if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
         'Encrypt' => false,
     ];
 }
-
+/*
 if (empty($_SERVER['HTTP_HOST'])) {
     $_SERVER['HTTP_HOST'] = 'localhost';
 }
@@ -51,6 +51,7 @@ if (strpos($_SERVER['HTTP_HOST'], '.gitpod.io') !== false) {
         }
     }
 }
+*/
 
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';
