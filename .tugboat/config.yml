@@ -67,7 +67,7 @@ services:
         - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
         - mysql -e "SET GLOBAL wait_timeout=28800;"
-        - mysql -e "SET GLOBAL skip_log_bin=ON;"
+        - mysql -e "SET GLOBAL disable_log_bin=ON;"
     environment:
       MYSQL_ROOT_PASSWORD: "m@0dl3ing"
       MYSQL_DATABASE: "moodle"
