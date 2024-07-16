@@ -20,7 +20,7 @@ services:
         - echo "SetEnv MOODLE_DOCKER_DBCOLLATION utf8mb4_bin" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBNAME moodle" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBUSER moodle" >> /etc/apache2/conf-available/env.conf
-        - echo "SetEnv MOODLE_DOCKER_DBPASS m@0dl3ing" >> /etc/apache2/conf-available/env.conf
+        - echo "SetEnv MOODLE_DOCKER_DBPASS m00dl3ing" >> /etc/apache2/conf-available/env.conf
         #- service apache2 reload
         
         # Link the document root to the expected path. This example links /moodle
@@ -61,10 +61,10 @@ services:
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
         - mysql -e "SET GLOBAL wait_timeout=28800;"
         # - mysql -e "SET GLOBAL disable_log_bin=ON;"
-        - export MYSQL_ROOT_PASSWORD=m@0dl3ing
+        - export MYSQL_ROOT_PASSWORD=m00dl3ing
         - export MYSQL_DATABASE=moodle
         - export MYSQL_USER=moodle
-        - export MYSQL_PASSWORD=m@0dl3ing
+        - export MYSQL_PASSWORD=m00dl3ing
         - mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE; GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'; FLUSH PRIVILEGES;"   
     #ports:
     #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
