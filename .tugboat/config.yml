@@ -64,8 +64,8 @@ services:
         - export MYSQL_USER=moodle
         - export MYSQL_PASSWORD=m00dl3ing
         #- mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'moodl3ing'; FLUSH PRIVILEGES;"
-        - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'moodl3ing';"
-        - mysql -e "ALTER USER 'tugboat'@'%' IDENTIFIED WITH mysql_native_password BY 'tugboat';"
+        - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'moodl3ing'; FLUSH PRIVILEGES;"
+        #- mysql -e "ALTER USER 'tugboat'@'%' IDENTIFIED WITH mysql_native_password BY 'tugboat';"
     #ports:
     #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
 
