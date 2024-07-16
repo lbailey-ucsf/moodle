@@ -9,7 +9,7 @@ $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'db';
 $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'moodle';
-$CFG->dbpass    = 'm@0dl3ing';
+$CFG->dbpass    = 'm00dl3ing';
 $CFG->prefix    = 'm_';
 $CFG->dboptions = ['dbcollation' => 'utf8mb4_unicode_ci'];
 
