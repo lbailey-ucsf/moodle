@@ -39,8 +39,6 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
-
-  
         
       build:
       #  - npm install
@@ -65,6 +63,11 @@ services:
         - export MYSQL_DATABASE=moodle
         - export MYSQL_USER=moodle
         - export MYSQL_PASSWORD=m00dl3ing
-        - mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE; GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'; FLUSH PRIVILEGES;"   
+        - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'moodl3ing'; FLUSH PRIVILEGES;"   
+        - mysql -e "ALTER USER 'tugboat'@'%' IDENTIFIED WITH mysql_native_password BY 'tugboat';"
     #ports:
     #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
+
+  phpmyadmin:
+    expose: 80
+    image: phpmyadmin/phpmyadmin
