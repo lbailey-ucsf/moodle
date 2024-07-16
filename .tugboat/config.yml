@@ -39,6 +39,7 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
+        - chmod 0777 ${DOCROOT}
         
       build:
       #  - npm install
