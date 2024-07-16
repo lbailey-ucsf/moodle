@@ -5,15 +5,6 @@ services:
     default: true
     depends_on:
       - db
-    environment:
-      MOODLE_DOCKER_RUNNING: 1
-      MOODLE_DOCKER_DB: mariadb
-      MOODLE_DOCKER_DBTYPE: mariadb     
-      MOODLE_DOCKER_DBCOLLATION: utf8mb4_bin
-      MOODLE_DOCKER_DBNAME: moodle
-      MOODLE_DOCKER_DBUSER: moodle
-      MOODLE_DOCKER_DBPASS: "m@0dl3ing"
-      MOODLE_DOCKER_BROWSER: firefox
     commands:
       init:
         - echo "****** initializing webserver *****"
@@ -30,19 +21,17 @@ services:
         - echo "SetEnv MOODLE_DOCKER_DBNAME moodle" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBUSER moodle" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBPASS m@0dl3ing" >> /etc/apache2/conf-available/env.conf
-        - service apache2 reload
-
-
+        #- service apache2 reload
         
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
 
-        - echo "php extensions"
-        - php -m
+        #- echo "php extensions"
+        #- php -m
         
-        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+        #- cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
@@ -51,19 +40,20 @@ services:
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
 
-        # Install/update packages managed by composer, including drush.
-        - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl  
+  
         
       build:
       #  - npm install
       #  - npx grunt
+      # Install/update packages managed by composer, including drush.
+        - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
         
-      #update:
+      update:
+        - service apache2 start
       #  - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
     
   db:
     image: "tugboatqa/mariadb:10.7"
-    #image: "mariadb:${MOODLE_DOCKER_DB_VERSION:-10.7}"
     commands:
       init:
         - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
@@ -71,10 +61,10 @@ services:
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
         - mysql -e "SET GLOBAL wait_timeout=28800;"
         # - mysql -e "SET GLOBAL disable_log_bin=ON;"
-    environment:
-      MYSQL_ROOT_PASSWORD: "m@0dl3ing"
-      MYSQL_DATABASE: "moodle"
-      MYSQL_USER: "moodle"
-      MYSQL_PASSWORD: "m@0dl3ing"
+        - export MYSQL_ROOT_PASSWORD=m@0dl3ing
+        - export MYSQL_DATABASE=moodle
+        - export MYSQL_USER=moodle
+        - export MYSQL_PASSWORD=m@0dl3ing
+        - mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE; GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'; FLUSH PRIVILEGES;"   
     #ports:
     #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
