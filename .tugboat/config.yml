@@ -1,7 +1,7 @@
 services:
   webserver:
     #image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
-    image: "tugboatqa/php:8-apache"
+    image: "tugboatqa/php:8.2-apache"
     default: true
     depends_on:
       - db
@@ -9,11 +9,15 @@ services:
       init:
         - echo "****** initializing webserver *****"
         
-        - sudo apt-get update
+        - sudo apt-get update        
         #- sudo apt-get install php-mysql
         #- sudo apt-get install default-mysql-client
         #- sudo apt-get --with-mysqli install mariadb-client
         - docker-php-ext-install mysqli
+        - docker-php-ext-install zip
+        - docker-php-ext-install soap
+        - docker-php-ext-install intl
+        - docker-php-ext-install exif
         
         - echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
         - echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
