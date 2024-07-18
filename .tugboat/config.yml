@@ -28,7 +28,7 @@ services:
         #- echo "SetEnv MOODLE_DOCKER_DBPASS m00dl3ing" >> /etc/apache2/conf-available/env.conf
         
         - echo "Setting max_input_vars"
-        - echo "max_input_vars = 3000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
+        - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
         
         #- service apache2 reload
         
