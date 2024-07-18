@@ -9,7 +9,8 @@ services:
       init:
         - echo "****** initializing webserver *****"
         
-        - sudo apt-get update        
+        - sudo apt-get update
+        - sudo apt-get install libzip-dev
         #- sudo apt-get install php-mysql
         #- sudo apt-get install default-mysql-client
         #- sudo apt-get --with-mysqli install mariadb-client
