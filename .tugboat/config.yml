@@ -40,7 +40,7 @@ services:
         #- echo "php extensions"
         #- php -m
         
-        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+        #- cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
