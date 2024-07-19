@@ -35,12 +35,12 @@ services:
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
-        - ln -snf "$TUGBOAT_ROOT/moodle" "${DOCROOT}"
+        - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
 
         #- echo "php extensions"
         #- php -m
         
-        #- cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
