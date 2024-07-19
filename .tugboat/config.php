@@ -19,9 +19,14 @@ phpinfo();
 
 if (empty($_SERVER['HTTP_HOST'])) {
     $_SERVER['HTTP_HOST'] = 'localhost';
+    echo 'http host empty';
 }
 
-$CFG->wwwroot = getenv('TUGBOAT_SERVICE_URL');
+$protocol = getenv('TUGBOAT_DEFAULT_SERVICE_URL_PROTOCOL');
+$host = getenv('TUGBOAT_DEFAULT_SERVICE_URL_HOST');
+
+//$CFG->wwwroot = getenv('TUGBOAT_SERVICE_URL');
+$CFG->wwwroot = $protocol . '://' . $host;
 $CFG->dataroot  = '/var/www/moodledata';
 $CFG->admin     = 'admin';
 $CFG->directorypermissions = 0777;
