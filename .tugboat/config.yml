@@ -35,7 +35,7 @@ services:
         # Link the document root to the expected path. This example links /moodle
         # to the docroot.
         #Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
-        - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        - ln -snf "$TUGBOAT_ROOT/moodle" "${DOCROOT}"
 
         #- echo "php extensions"
         #- php -m
