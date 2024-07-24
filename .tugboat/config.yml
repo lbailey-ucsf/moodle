@@ -34,7 +34,7 @@ services:
         # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         
-        #- cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
+        - cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
@@ -52,6 +52,8 @@ services:
       #  - npx grunt
       # Install/update packages managed by composer
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
+      
+      online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
         
 
