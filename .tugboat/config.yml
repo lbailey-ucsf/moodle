@@ -52,7 +52,7 @@ services:
       #  - npx grunt
       # Install/update packages managed by composer
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
-        - php admin/cli/install.php --non-interactive --agreelicense --lang=en --wwwroot=https://$TUGBOAT_DEFAULT_SERVICE_URL_HOST --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db dbname=moodle dbuser=moodle dbpass=m00dl3ing --adminuser=admin --adminpass=admin --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.ed --
+        - php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://$TUGBOAT_DEFAULT_SERVICE_URL_HOST --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=admin --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
       
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
