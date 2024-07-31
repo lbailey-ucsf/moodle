@@ -52,6 +52,7 @@ services:
       #  - npx grunt
       # Install/update packages managed by composer
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
+        - php install.php
       
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
