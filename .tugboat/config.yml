@@ -9,6 +9,7 @@ services:
       init:
         - echo "****** initializing webserver *****"
 
+        - su
         - apt-get install sudo
 
         #- echo "****** installing required php extensions *****"
