@@ -20,22 +20,12 @@ services:
 
         - git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
         - git submodule update --init
-        
-        #- echo "SetEnv MOODLE_DOCKER_DB mariadb" >> /etc/apache2/conf-available/env.conf
-        #- echo "SetEnv MOODLE_DOCKER_DBTYPE mariadb" >> /etc/apache2/conf-available/env.conf
-        #- echo "SetEnv MOODLE_DOCKER_DBCOLLATION utf8mb4_bin" >> /etc/apache2/conf-available/env.conf
-        #- echo "SetEnv MOODLE_DOCKER_DBNAME moodle" >> /etc/apache2/conf-available/env.conf
-        #- echo "SetEnv MOODLE_DOCKER_DBUSER moodle" >> /etc/apache2/conf-available/env.conf
-        #- echo "SetEnv MOODLE_DOCKER_DBPASS m00dl3ing" >> /etc/apache2/conf-available/env.conf
-        
+
         - echo "Setting max_input_vars"
         - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
                
         # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
-        #- ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
-        
-        #- cp "${TUGBOAT_ROOT}/.tugboat/config.php" "${DOCROOT}/config.php"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
@@ -43,7 +33,6 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
-        #- chmod 0777 ${DOCROOT}
         - chown www-data $DOCROOT
 
       update:
@@ -60,8 +49,6 @@ services:
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
         
-
-          
   db:
     image: "tugboatqa/mariadb:10.7"
     commands:
@@ -70,16 +57,11 @@ services:
         - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
         - mysql -e "SET GLOBAL wait_timeout=28800;"
-        # - mysql -e "SET GLOBAL disable_log_bin=ON;"
         - export MYSQL_ROOT_PASSWORD=m00dl3ing
         - export MYSQL_DATABASE=moodle
         - export MYSQL_USER=moodle
         - export MYSQL_PASSWORD=m00dl3ing
-        #- mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'm00dl3ing'; FLUSH PRIVILEGES;"
         - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'm00dl3ing'; FLUSH PRIVILEGES;"
-        #- mysql -e "ALTER USER 'tugboat'@'%' IDENTIFIED WITH mysql_native_password BY 'tugboat';"
-    #ports:
-    #  - "${MOODLE_DOCKER_DB_PORT}:3306/tcp"
 
   phpmyadmin:
     expose: 80
