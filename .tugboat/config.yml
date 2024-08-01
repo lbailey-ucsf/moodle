@@ -27,7 +27,8 @@ services:
         - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
                
         # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
-        - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        #- ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        - ln -snf "$TUGBOAT_ROOT" "/var/www/html/"
         
         #make required dirs and set permissions.
         #- mkdir /var/www/moodledata
@@ -46,7 +47,8 @@ services:
       # Install/update packages managed by composer
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
         - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://$TUGBOAT_DEFAULT_SERVICE_URL_HOST --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
-        - chown -R root $DOCROOT
+        #- chown -R root $DOCROOT
+        - chown -R root "/var/www/html/"
       
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
