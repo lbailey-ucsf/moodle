@@ -9,6 +9,8 @@ services:
       init:
         - echo "****** initializing webserver *****"
 
+        - apt sudo install
+
         #- echo "****** installing required php extensions *****"
         #- sudo apt-get update
         #- sudo apt-get install libzip-dev
