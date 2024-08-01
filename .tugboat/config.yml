@@ -32,7 +32,7 @@ services:
                
         # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
         #- ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
-        - ln -snf "$TUGBOAT_ROOT" "/var/www/html/"
+        - ln -snf "$TUGBOAT_ROOT" "/var/www/html"
         
         #make required dirs and set permissions.
         #- mkdir /var/www/moodledata
@@ -41,7 +41,7 @@ services:
         #- mkdir /var/www/behatfaildumps
         #- chmod 0777 /var/www/moodledata
         #- chown www-data $DOCROOT
-        - chown www-data /var/www/html
+        - chown www-data $TUGBOAT_ROOT
 
       update:
         - service apache2 start
@@ -53,7 +53,7 @@ services:
         #- composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
         - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://$TUGBOAT_DEFAULT_SERVICE_URL_HOST --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
         #- chown -R root $DOCROOT
-        - chown -R root /var/www/html
+        - chown -R root $TUGBOAT_ROOT
       
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
