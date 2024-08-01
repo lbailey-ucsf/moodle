@@ -10,6 +10,7 @@ services:
         - echo "****** initializing webserver *****"
 
         - su
+        - apt-get update
         - apt-get install sudo
 
         #- echo "****** installing required php extensions *****"
