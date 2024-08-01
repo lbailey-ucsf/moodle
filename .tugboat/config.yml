@@ -1,23 +1,25 @@
 services:
   webserver:
-    #image: "moodlehq/moodle-php-apache:${MOODLE_DOCKER_PHP_VERSION}"
-    image: "tugboatqa/php:8.2-apache"
+    image: "moodlehq/moodle-php-apache:8.2"
+    #image: "tugboatqa/php:8.2-apache"
     default: true
     depends_on:
       - db
     commands:
       init:
         - echo "****** initializing webserver *****"
-        
-        - sudo apt-get update
-        - sudo apt-get install libzip-dev
-        - sudo apt-get install -y unzip git
-        - docker-php-ext-install mysqli
-        - docker-php-ext-install zip
-        - docker-php-ext-install soap
-        - docker-php-ext-install intl
-        - docker-php-ext-install exif
 
+        #- echo "****** installing required php extensions *****"
+        #- sudo apt-get update
+        #- sudo apt-get install libzip-dev
+        #- sudo apt-get install -y unzip git
+        #- docker-php-ext-install mysqli
+        #- docker-php-ext-install zip
+        #- docker-php-ext-install soap
+        #- docker-php-ext-install intl
+        #- docker-php-ext-install exif
+
+        - echo "****** initializing the submodules *****"
         - git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
         - git submodule update --init
 
@@ -28,12 +30,12 @@ services:
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         
         #make required dirs and set permissions.
-        - mkdir /var/www/moodledata
-        - mkdir /var/www/phpunitdata
-        - mkdir /var/www/behatdata
-        - mkdir /var/www/behatfaildumps
-        - chmod 0777 /var/www/moodledata
-        - chown www-data $DOCROOT
+        #- mkdir /var/www/moodledata
+        #- mkdir /var/www/phpunitdata
+        #- mkdir /var/www/behatdata
+        #- mkdir /var/www/behatfaildumps
+        #- chmod 0777 /var/www/moodledata
+        #- chown www-data $DOCROOT
 
       update:
         - service apache2 start
