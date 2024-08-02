@@ -53,7 +53,7 @@ services:
         #- composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
         #- chown www-data $DOCROOT
         - chown www-data /var/www/html
-        - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://{$TUGBOAT_DEFAULT_SERVICE_URL_HOST}/tugboat --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
+        - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST}/tugboat --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
         #- chown -R root $DOCROOT
         #- chown -R root $TUGBOAT_ROOT
         - chown -R root /var/www/html
