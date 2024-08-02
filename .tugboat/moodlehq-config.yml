@@ -1,1 +1,56 @@
+services:
+  webserver:
+    image: "moodlehq/moodle-php-apache:8.2"
+    default: true
+    depends_on:
+      - db
+    commands:
+      init:
+        - echo "****** initializing webserver *****"
+
+        - su
+        - apt-get update
+        - apt-get install sudo
+
+        - echo "****** initializing the submodules *****"
+        - git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
+        - git submodule update --init
+
+        - echo "Setting max_input_vars"
+        - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
+               
+        # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
+        - ln -snf "$TUGBOAT_ROOT" "/var/www/html"
+
+      update:
+        - service apache2 start
+      
+      build:
+      #  - npm install
+      #  - npx grunt
+      # Install/update packages managed by composer
+        - chown www-data $DOCROOT
+        - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
+        - chown -R root $DOCROOT
+      
+      online:
+        - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
+        
+  db:
+    image: "tugboatqa/mariadb:10.7"
+    commands:
+      init:
+        - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
+        - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
+        - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
+        - mysql -e "SET GLOBAL wait_timeout=28800;"
+        - export MYSQL_ROOT_PASSWORD=m00dl3ing
+        - export MYSQL_DATABASE=moodle
+        - export MYSQL_USER=moodle
+        - export MYSQL_PASSWORD=m00dl3ing
+        - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'm00dl3ing'; FLUSH PRIVILEGES;"
+
+  phpmyadmin:
+    expose: 80
+    image: phpmyadmin/phpmyadmin
 
