@@ -46,7 +46,14 @@ services:
       #  - npm install
       #  - npx grunt
         - chown www-data $DOCROOT
-        - sudo -u www-data php admin/cli/install.php --non-interactive --agree-license --lang=en --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} --dataroot=/var/www/moodledata --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --adminuser=admin --adminpass=Admin123! --prefix=m_ --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
+        - |
+          sudo -u www-data php admin/cli/install.php \
+          --non-interactive --agree-license --lang=en \
+          --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} \
+          --dataroot=/var/www/moodledata \
+          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --prefix=m_ \
+          --adminuser=admin --adminpass=Admin123! \
+          --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
         - chown -R root $DOCROOT
       
       online:
