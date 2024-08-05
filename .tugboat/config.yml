@@ -2,7 +2,7 @@ services:
   webserver:
     image: "tugboatqa/php:8.2-apache"
     default: true
-    checkout_path: /var/www/moodle
+    checkout_path: "/var/www/moodle"
     depends_on:
       - db
     commands:
