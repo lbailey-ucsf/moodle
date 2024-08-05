@@ -21,7 +21,8 @@ services:
         - docker-php-ext-install exif
 
         #- echo "****** initializing the submodules *****"
-        - git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
+        #- git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
+        - git config submodule.admin/tool/ucsfsomapi.url https://${GITHUB_TOKEN_USER}:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
         - git submodule update --init
 
         - echo "****** Setting php config variables ******"
