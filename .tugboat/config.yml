@@ -24,10 +24,10 @@ services:
         - git config submodule.admin/tool/ucsfsomapi.url https://lbailey-ucsf:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
         - git submodule update --init
 
-        - echo "Setting max_input_vars"
+        - echo "****** Setting php config variables ******"
         - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
                
-        # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
+        # Link the document root to the expected path.
         - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         
         #make required dirs and set permissions.
@@ -36,32 +36,32 @@ services:
         - mkdir /var/www/behatdata
         - mkdir /var/www/behatfaildumps
         - chmod 0777 /var/www/moodledata
-        #- chown www-data $DOCROOT
-        
 
       update:
+        - echo "****** updatig webserver *****"
         - composer install --optimize-autoloader --ignore-platform-req=ext-zip --ignore-platform-req=ext-intl
         - service apache2 start
       
-      build:
+      build:      
       #  - npm install
       #  - npx grunt
+        - echo "****** building webserver *****"
         - chown www-data $DOCROOT
         - |
           sudo -u www-data php admin/cli/install.php \
           --non-interactive --agree-license --lang=en \
           --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} \
           --dataroot=/var/www/moodledata \
-          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=${MOODLE_DBPASS} --prefix=m_ \
-          --adminuser=admin --adminpass=Admin123! \
-          --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
+          --dbtype=${MOODLE_DB_TYPE} --dbhost=db --dbname=${MOODLE_DBNAME} --dbuser=${MOODLE_DBUSER} --dbpass=${MOODLE_DBPASS} --prefix=m_ \
+          --adminuser=${MOODLE_DBADMIN_PASS} --adminpass=${MOODLE_DBADMIN_PASS} \
+          --fullname=PREVIEW --shortname=PREVIEW --adminemail=${MOODLE_ADMIN_EMAIL}
         - chown -R root $DOCROOT
       
       online:
         - php admin/tool/generator/cli/maketestsite.php --size=S --bypasscheck
         
   db:
-    image: "tugboatqa/mariadb:10.7"
+    image: "tugboatqa/${MOODLE_DB_TYPE}:${MOODLE_DB_VERSION}"
     commands:
       init:
         - echo "*** intializing database ***"
@@ -69,11 +69,11 @@ services:
         - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
         - mysql -e "SET GLOBAL wait_timeout=28800;"
-        - export MYSQL_ROOT_PASSWORD=m00dl3ing
-        - export MYSQL_DATABASE=moodle
-        - export MYSQL_USER=moodle
-        - export MYSQL_PASSWORD=m00dl3ing
-        - mysql -e "CREATE DATABASE IF NOT EXISTS moodle; GRANT ALL PRIVILEGES ON moodle.* TO 'moodle'@'%' IDENTIFIED BY 'm00dl3ing'; FLUSH PRIVILEGES;"
+        - export MYSQL_ROOT_PASSWORD=${MOODLE_DBPASS}
+        - export MYSQL_DATABASE=${MOODLE_DBNAME}
+        - export MYSQL_USER=${MOODLE_DBUSER}
+        - export MYSQL_PASSWORD=${MOODLE_DBPASS}
+        - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; FLUSH PRIVILEGES;"
 
   phpmyadmin:
     expose: 80
