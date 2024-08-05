@@ -2,6 +2,7 @@ services:
   webserver:
     image: "tugboatqa/php:8.2-apache"
     default: true
+    checkout_path: /var/www/moodle
     depends_on:
       - db
     commands:
@@ -27,7 +28,7 @@ services:
         - echo "max_input_vars = 5000" >> /usr/local/etc/php/conf.d/max_input_vars.ini
                
         # Link the document root to the expected path. Note: the TUGBOAT_ROOT environment variable is equivalent to the git repo root.
-        - ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
+        #- ln -snf "$TUGBOAT_ROOT" "${DOCROOT}"
         
         #make required dirs and set permissions.
         - mkdir /var/www/moodledata
@@ -51,7 +52,7 @@ services:
           --non-interactive --agree-license --lang=en \
           --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} \
           --dataroot=/var/www/moodledata \
-          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=m00dl3ing --prefix=m_ \
+          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=${MOOODLE_DBPASS} --prefix=m_ \
           --adminuser=admin --adminpass=Admin123! \
           --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
         - chown -R root $DOCROOT
