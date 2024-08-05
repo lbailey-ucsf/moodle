@@ -52,7 +52,7 @@ services:
           --non-interactive --agree-license --lang=en \
           --wwwroot=https://${TUGBOAT_DEFAULT_SERVICE_URL_HOST} \
           --dataroot=/var/www/moodledata \
-          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=${MOOODLE_DBPASS} --prefix=m_ \
+          --dbtype=mariadb --dbhost=db --dbname=moodle --dbuser=moodle --dbpass=${MOODLE_DBPASS} --prefix=m_ \
           --adminuser=admin --adminpass=Admin123! \
           --fullname=PREVIEW --shortname=PREVIEW --adminemail=leon.bailey@ucsf.edu
         - chown -R root $DOCROOT
