@@ -36,6 +36,8 @@ $string['greetinguserit'] = 'Ciao, {$a}';
 $string['greetings:viewmessages'] = 'View messages on the Greetings wall';
 $string['greetings:postmessages'] = 'Post a message on the Greetings wall';
 $string['greetings:deleteanyposts'] = 'Delete any message on the Greetings wall';
+$string['greetings:editposts'] = 'Edit you message on the Greetings wall';
+$string['messagecardbgcolor'] = 'Message card background color';
+$string['messagecardbgcolordesc'] = 'Set the background color for the message card.';
 $string['pluginname'] = 'Greetings';
 $string['postedby'] = 'Posted by {$a}.';
-

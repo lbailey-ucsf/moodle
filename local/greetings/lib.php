@@ -44,7 +44,7 @@ function local_greetings_get_greeting($user) {
         case 'IT':
             return get_string('greetinguserit', 'local_greetings', fullname($user));
         default:
-            return get_string('greetinguser', 'local_greetings');
+            return get_string('greetingloggedinuser', 'local_greetings', fullname($user));
     }
 }
 

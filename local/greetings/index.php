@@ -23,6 +23,7 @@
  */
 
 use core\plugininfo\format;
+use core\plugininfo\local;
 
 require('../../config.php');
 require_once($CFG->dirroot . '/local/greetings/lib.php');
@@ -44,24 +45,22 @@ if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
 
-
-
-$greeting = get_string('greetinguser', 'local_greetings');
+$deleteanypost = has_capability('local/greetings:deleteanyposts', $context);
+$editpost = has_capability('local/greetings:editposts', $context);
+$allowpost = has_capability('local/greetings:postmessages', $context);
+$action = optional_param('action', '', PARAM_TEXT);
 
 if (isloggedin()) {
-    $greeting = local_greetings_get_greeting($USER);
+    echo local_greetings_get_greeting($USER);
+} else {
+    get_string('greetinguser', 'local_greetings');
 }
 
-echo $greeting;
-
-$allowpost = has_capability('local/greetings:postmessages', $context);
 $messageform = new \local_greetings\form\message_form();
 if ($allowpost) {
     $messageform->display();
 }
 
-$deleteanypost = has_capability('local/greetings:deleteanyposts', $context);
-$action = optional_param('action', '', PARAM_TEXT);
 if ($action == 'del') {
     require_sesskey();
     $id = required_param('id', PARAM_TEXT);
@@ -71,6 +70,7 @@ if ($action == 'del') {
         redirect($PAGE->url);
     }
 }
+
 
 if ($data = $messageform->get_data()) {
     require_capability('local/greetings:postmessages', $context);
@@ -93,10 +93,11 @@ if ($allowview) {
     $messages = $DB->get_records_sql($sql);
 
     echo $OUTPUT->box_start('card-columns');
+    $cardbackgroundcolor = get_config('local_greetings', 'messagecardbgcolor');
 
     foreach ($messages as $m) {
         $cleanmessage = format_text($m->message, FORMAT_PLAIN);
-        echo html_writer::start_tag('div', ['class' => 'card']);
+        echo html_writer::start_tag('div', ['class' => 'card', 'style' => "background: $cardbackgroundcolor"]);
         // Card body.
         echo html_writer::start_tag('div', ['class' => 'card-body']);
         echo html_writer::tag('p', $cleanmessage, ['class' => 'card-text']);
@@ -105,9 +106,9 @@ if ($allowview) {
         echo html_writer::tag('small', userdate($m->timecreated), ['class' => 'text-muted']);
         echo html_writer::end_tag('p');
         echo html_writer::end_tag('div');
+        echo html_writer::start_tag('p', ['class' => 'card-footer text-center']);
         // Card footer.
         if ($deleteanypost) {
-            echo html_writer::start_tag('p', ['class' => 'card-footer text-center']);
             echo html_writer::link(
                 new moodle_url(
                     '/local/greetings/index.php',
@@ -115,8 +116,19 @@ if ($allowview) {
                 ),
                 $OUTPUT->pix_icon('t/delete', '') . get_string('delete')
             );
-            echo html_writer::end_tag('p');
         }
+
+        if ($editpost || $deleteanypost) {
+            echo html_writer::link(
+                new moodle_url(
+                    '/local/greetings/index.php',
+                    ['action' => 'edit', 'id' => $m->id, 'sesskey' => sesskey()]
+                ),
+                $OUTPUT->pix_icon('i/edit', '') . get_string('edit')
+            );
+        }
+
+        echo html_writer::end_tag('p');
 
         echo html_writer::end_tag('div');
     }
