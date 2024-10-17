@@ -53,3 +53,7 @@
 	url = https://github.com/PoetOS/moodle-mod_questionnaire
 	branch = MOODLE_404_STABLE
 	tag = v4.1.1
+[submodule "mod/diary"]
+	path = mod/diary
+	url = https://github.com/drachels/moodle-mod_diary
+	branch = master
