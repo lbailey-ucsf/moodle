@@ -31,7 +31,7 @@
 	path = blocks/checklist
 	url = https://github.com/davosmith/moodle-block_checklist
 	branch = master
-	tag = 3.4.3.1
+	tag = 3.4.3.2
 [submodule "blocks/course_recent"]
 	path = blocks/course_recent
 	url = https://github.com/ucsf-education/moodle-block-course_recent
@@ -107,6 +107,10 @@
 	path = local/navbarhelpmenu
 	url = https://github.com/ucsf-education/moodle-local_navbarhelpmenu
 	branch = MOODLE_403_STABLE
+[submodule "local/quizanon"]
+	path = local/quizanon
+	url = https://github.com/ucsf-education/local_quizanon
+	branch = MOODLE_403_STAGING
 [submodule "local/staticpage"]
 	path = local/staticpage
 	url = https://github.com/moodleuulm/moodle-local_staticpage
@@ -120,7 +124,7 @@
 	path = mod/checklist
 	url = https://github.com/davosmith/moodle-checklist
 	branch = master
-	tag = 4.1.0.2
+	tag = 4.1.0.3
 [submodule "mod/choicegroup"]
 	path = mod/choicegroup
 	url = https://github.com/ndunand/moodle-mod_choicegroup
