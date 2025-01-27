@@ -16,8 +16,9 @@
 	branch = MOODLE_404_STABLE
 [submodule "availability/condition/mobileapp"]
 	path = availability/condition/mobileapp
-	url = https://github.com/ucsf-education/moodle-availability_mobileapp
-	branch = UCSFCLE_403_STABLE
+	url = https://github.com/moodlehq/moodle-availability_mobileapp
+	branch = main
+	tag = 4.5
 [submodule "blocks/attendance"]
 	path = blocks/attendance
 	url = https://github.com/danmarsden/moodle-block_attendance
@@ -35,7 +36,7 @@
 	path = blocks/massaction
 	url = https://github.com/Syxton/moodle-block_massaction
 	branch = master
-	tag = 7.3.1
+	tag = 7.4.1
 [submodule "blocks/quickmail"]
 	path = blocks/quickmail
 	url = https://github.com/ucsf-education/moodle-block_quickmail
@@ -93,7 +94,7 @@
 	path = mod/customcert
 	url = https://github.com/mdjnelson/moodle-mod_customcert
 	branch = MOODLE_404_STABLE
-	tag = v4.4.2
+	tag = v4.4.3
 [submodule "mod/diary"]
 	path = mod/diary
 	url = https://github.com/drachels/moodle-mod_diary
@@ -122,8 +123,9 @@
 	tag = v5.2.4
 [submodule "plagiarism/turnitin"]
 	path = plagiarism/turnitin
-	url = https://github.com/ucsf-education/moodle-plagiarism_turnitin
-	branch = UCSFCLE_403_STABLE
+	url = https://github.com/turnitin/moodle-plagiarism_turnitin
+	branch = master
+	tag = v2024120502
 [submodule "question/type/knowledgecheck"]
 	path = question/type/knowledgecheck
 	url = https://github.com/ucsf-education/knowledgecheck.git
