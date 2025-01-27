@@ -1,6 +1,8 @@
 name: SonarQube Code Scan All
 on:
   workflow_dispatch:
+  workflow_call:
+
 env:
   SONAR_TOKEN: sqp_db041dcd2f5c1f5310d1a87bde0dde3c52b455fa
   SONAR_HOST_URL: https://sonarqube.ucsf.edu
@@ -17,7 +19,7 @@ jobs:
       - name: Scan Core PHP Code (except lib)
         uses: sonarsource/sonarqube-scan-action@v4.2.1
         with:
-          args: >-
+          args: >
             -Dsonar.projectKey=${{ env.SQ_PROJECT_KEY }}
             -Dsonar.language=php
             -Dsonar.lang.patterns.mule=-
@@ -39,12 +41,11 @@ jobs:
       - name: Scan lib folder PHP Code
         uses: sonarsource/sonarqube-scan-action@v4.2.1
         with:
-          args: >-
+          args: >
             -Dsonar.projectKey=${{ env.SQ_PROJECT_KEY }}
             -Dsonar.language=php
             -Dsonar.lang.patterns.mule=-
             -Dsonar.excludePlugins=mulevalidationsonarqubepluginmule
-            -Dsonar.exclusions=...
             -Dsonar.inclusions=lib/**/*.php
             -Dsonar.log.level=WARN
             -Dsonar.plugins.downloadOnlyRequired=true
@@ -61,12 +62,11 @@ jobs:
       - name: Scan Core Frontend Code
         uses: sonarsource/sonarqube-scan-action@v4.2.1
         with:
-          args: >-
+          args: >
             -Dsonar.projectKey=${{ env.SQ_PROJECT_KEY }}
             -Dsonar.lang.patterns.mule=-
             -Dsonar.excludePlugins=mulevalidationsonarqubepluginmule
-            -Dsonar.exclusions=...
-            -Dsonar.inclusions=**/*.js,**/*.jsx,...
+            -Dsonar.inclusions=**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.css,**/*.scss,**/*.xml,**/*.cass,**/*.mustache,**/*.json,**/*.html
             -Dsonar.log.level=WARN
             -Dsonar.javascript.file.suffixes=.js,.jsx,.mocha.js,.spec.js,.test.js,.st,.tsx
             -Dsonar.language=js,css,xml,cass,mustache,json,ts,html
@@ -88,7 +88,7 @@ jobs:
       - name: Scan Plugins Code
         uses: sonarsource/sonarqube-scan-action@v4.2.1
         with:
-          args: >-
+          args: >
             -Dsonar.projectKey=${{ env.SQ_PROJECT_KEY }}
             -Dsonar.lang.patterns.mule=-
             -Dsonar.excludePlugins=mulevalidationsonarqubepluginmule
