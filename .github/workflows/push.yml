@@ -142,4 +142,7 @@ jobs:
           SONAR_TOKEN: sqp_db041dcd2f5c1f5310d1a87bde0dde3c52b455fa
           SONAR_HOST_URL: https://sonarqube.ucsf.edu
         with:
-          args: -Dsonar.projectKey=ucsf-education_moodle_ab414c18-b81d-4ee0-9125-2904626af99bS
+          args: >
+            -Dsonar.projectKey=ucsf-education_moodle_ab414c18-b81d-4ee0-9125-2904626af99bS
+            -Dsonar.exclusions=**/node_modules/**,**/vendor/**,**/tests/behat/**
+            -Dsonar.sources=filter/ucsfezproxy
