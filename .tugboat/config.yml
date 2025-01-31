@@ -30,7 +30,7 @@ services:
         - docker-php-ext-install ftp
         - docker-php-ext-install gettext
         #- docker-php-ext-install igbinary
-        - docker-php-ext-install memcached
+        #- docker-php-ext-install memcached
         - docker-php-ext-install msgpack
         - docker-php-ext-install redis
         - docker-php-ext-install pspell
