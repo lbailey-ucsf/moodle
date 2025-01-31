@@ -40,7 +40,7 @@ services:
         - docker-php-ext-install sysvmsg
         - docker-php-ext-install sysvsem
         - docker-php-ext-install sysvshm
-        - docker-php-ext-install xsl
+        #- docker-php-ext-install xsl
 
         - echo "****** initializing the submodules *****"
         - git config submodule.admin/tool/ucsfsomapi.url https://${GITHUB_TOKEN_USER}:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
