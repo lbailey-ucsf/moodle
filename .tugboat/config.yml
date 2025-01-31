@@ -13,6 +13,10 @@ services:
         - sudo apt-get update
         - sudo apt-get install libzip-dev
         - sudo apt-get install libldap2-dev
+        - sudo apt-get install libmemcached-dev
+        - sudo apt-get install libmsgpack-dev
+        - sudo apt-get install libhiredis-dev
+        - sudo apt-get install libpspell-dev
         #- sudo apt-get install php-igbinary-all-dev
         - sudo apt-get install -y unzip git
         - docker-php-ext-install mysqli
