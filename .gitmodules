@@ -71,6 +71,10 @@
 	path = local/navbarhelpmenu
 	url = https://github.com/ucsf-education/moodle-local_navbarhelpmenu
 	branch = MOODLE_404_STABLE
+[submodule "local/quizanon"]
+	path = local/quizanon
+	url = https://github.com/ucsf-education/local_quizanon
+	branch = MOODLE_404_STABLE
 [submodule "local/staticpage"]
 	path = local/staticpage
 	url = https://github.com/moodle-an-hochschulen/moodle-local_staticpage
@@ -120,12 +124,12 @@
 	path = mod/zoom
 	url = https://github.com/ncstate-delta/moodle-mod_zoom
 	branch = main
-	tag = v5.2.4
+	tag = v5.2.5
 [submodule "plagiarism/turnitin"]
 	path = plagiarism/turnitin
 	url = https://github.com/turnitin/moodle-plagiarism_turnitin
 	branch = master
-	tag = v2024120502
+	tag = v2024121901
 [submodule "question/type/knowledgecheck"]
 	path = question/type/knowledgecheck
 	url = https://github.com/ucsf-education/knowledgecheck.git
