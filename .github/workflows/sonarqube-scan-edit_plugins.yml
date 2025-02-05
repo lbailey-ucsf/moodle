@@ -1,4 +1,4 @@
-name: SonarQube Code Scan
+name: SonarQube Ed IT Plugins Scan
 on:
   workflow_dispatch:
   workflow_call:
@@ -9,7 +9,6 @@ env:
   SQ_PROJECT_KEY: ucsf-education_moodle_ab414c18-b81d-4ee0-9125-2904626af99b
 
 jobs:
-
   plugins_scan:
     name: Scan Education IT Plugins Code
     runs-on: ubuntu-latest
@@ -18,12 +17,13 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
-      - name: Extract Submodule Paths
+
+      - name: Plugins Code Scan
         run: |
-            SUBMODULE_PATHS=$(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | paste -sd, -)
-            echo "SUBMODULE_PATHS=$SUBMODULE_PATHS" >> $GITHUB_ENV
-      - name: Scan Plugins Code
-        uses: sonarsource/sonarqube-scan-action@v4.2.1
+          SUBMODULE_PATHS=$(git config --file .gitmodules --get-regexp path | awk '{ print $2 }' | paste -sd, -)
+          echo "SUBMODULE_PATHS=$SUBMODULE_PATHS" >> $GITHUB_ENV
+
+      - uses: sonarsource/sonarqube-scan-action@v4.2.1
         with:
           args: >
             -Dsonar.projectKey=${{ env.SQ_PROJECT_KEY }}
@@ -34,3 +34,11 @@ jobs:
             -Dsonar.plugins.downloadOnlyRequired=true
         env:
           SONAR_SCANNER_JAVA_OPTS: -Xmx8g
+
+      - name: Quality Gate Sheck
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+
+      - name: Quality Gate Status
+        run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
