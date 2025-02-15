@@ -10,37 +10,37 @@ services:
         - echo "****** initializing webserver *****"
 
         - echo "****** installing required php extensions *****"
-        - apt-get update
-        - apt-get install libzip-dev
-        - apt-get install libldap2-dev
-        - apt-get install libmemcached-dev
-        - apt-get install libmsgpack-dev
-        - pecl install redis
-        - apt-get install libpspell-dev
-        #- sudo apt-get install php-igbinary-all-dev
-        - sudo apt-get install -y unzip git
-        - docker-php-ext-install mysqli
-        - docker-php-ext-install zip
-        - docker-php-ext-install soap
-        - docker-php-ext-install intl
-        - docker-php-ext-install exif
-        - echo "****** installing additional php extensions *****"
-        - docker-php-ext-install ldap
-        - docker-php-ext-install ffi
-        - docker-php-ext-install ftp
-        - docker-php-ext-install gettext
-        #- docker-php-ext-install igbinary
-        #- docker-php-ext-install memcached
-        #- docker-php-ext-install msgpack
-        - docker-php-ext-enable redis
-        - docker-php-ext-install pspell
-        - docker-php-ext-install shmop
-        - docker-php-ext-install sockets
-        #- docker-php-ext-install solr
-        - docker-php-ext-install sysvmsg
-        - docker-php-ext-install sysvsem
-        - docker-php-ext-install sysvshm
-        #- docker-php-ext-install xsl
+        - apt-get update && apt-get install -y \
+            libzip-dev \
+            libldap2-dev \
+            libmemcached-dev \
+            libmsgpack-dev \
+            libpspell-dev \
+            unzip \
+            git \
+            libxml2-dev \
+            libcurl4-openssl-dev \
+            libxslt-dev
+        
+        - pecl install redis solr && docker-php-ext-enable redis solr
+
+        - docker-php-ext-install \
+            mysqli \
+            zip \
+            soap \
+            intl \
+            exif \
+            ldap \
+            ffi \
+            ftp \
+            gettext \
+            pspell \
+            shmop \
+            sockets \
+            sysvmsg \
+            sysvsem \
+            sysvshm \
+            xsl
 
         - echo "****** initializing the submodules *****"
         #- git config submodule.admin/tool/ucsfsomapi.url https://${GITHUB_TOKEN_USER}:${GITHUB_TOKEN}@github.com/ucsf-education/tool_ucsfsomapi.git
