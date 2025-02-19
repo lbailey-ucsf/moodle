@@ -68,3 +68,21 @@ services:
         - export MYSQL_USER=${MOODLE_DBUSER}
         - export MYSQL_PASSWORD=${MOODLE_DBPASS}
         - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; FLUSH PRIVILEGES;"
+
+  db-importer:
+    image: "tugboatqa/cli"
+    depends_on:
+      - db
+    commands:
+      init:
+        - echo "*** initializing db-importer ***"
+        - apt-get update && apt-get install -y unzip awscli
+        - mkdir -p /root/.aws
+        - echo "[default]" > /root/.aws/credentials
+        - echo "aws_access_key_id=${AWS_ACCESS_KEY}" >> /root/.aws/credentials
+        - echo "aws_secret_access_key=${AWS_SECRET_KEY}" >> /root/.aws/credentials
+        - echo "*** downloading database from S3 ***"
+        - aws s3 cp s3://${MOODLE_S3_BUCKET}/${MOODLE_S3_QA_DB_DUMP} /tmp/backup.sql.gz
+        - gunzip /tmp/backup.sql.gz
+        - echo "*** importing database into db service ***"
+        #- mysql -h db -u${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME} < /tmp/backup.sql
