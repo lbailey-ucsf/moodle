@@ -84,8 +84,16 @@ services:
             # Install required tools
             echo "Installing required tools for S3 download..."
             apt-get update
-            apt-get install -y python3-pip mysql-client
-            pip3 install awscli
+            apt-get install -y python3-full python3-venv mysql-client
+
+            # Creaet and activate a virtual environment
+            python3 -m venv /tmp/venv
+            . /tmp/venv/bin/activate
+
+            # Install AWS CLI
+            echo "Installing AWS CLI..."
+            pip install awscli
+            #pip3 install awscli
             
             # Configure AWS credentials
             echo "Configuring AWS credentials..."
