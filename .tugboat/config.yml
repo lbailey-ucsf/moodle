@@ -70,7 +70,7 @@ services:
         - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; FLUSH PRIVILEGES;"
 
   db-importer:
-    image: "tugboatqa/cli"
+    image: "tugboatqa/ubuntu:latest"
     depends_on:
       - db
     commands:
