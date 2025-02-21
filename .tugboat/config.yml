@@ -121,12 +121,12 @@ services:
             
             # Import the database
             echo "Importing database..."
-            #gunzip -c /tmp/database.sql.gz | mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
-            gunzip -c /tmp/database.sql.gz
+            gunzip -c /tmp/database.sql.gz | mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
+            #gunzip -c /tmp/database.sql.gz
             #mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}            
             
             # Clean up
-            #rm /tmp/database.sql.gz
+            rm /tmp/database.sql.gz
           else
             echo "Skipping db import. Genertaing testing data..."
             exit 0
