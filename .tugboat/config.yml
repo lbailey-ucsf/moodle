@@ -80,9 +80,8 @@ services:
           EOF
         
         # Restart to apply new configuration
-        #- service mysql restart
-        - systemctl restart mariadb
-        
+        - service mariadb restart
+                
         - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
         - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
         - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
