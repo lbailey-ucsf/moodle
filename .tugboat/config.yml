@@ -79,8 +79,9 @@ services:
           wait_timeout=28800
           EOF
         
-        # Restart MySQL to apply new configuration
-        - service mysql restart
+        # Restart to apply new configuration
+        #- service mysql restart
+        - systemctl restart mariadb
         
         - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
         - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
