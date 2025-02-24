@@ -60,42 +60,25 @@ services:
         
   db:
     image: "tugboatqa/mariadb:10.11.8"
-    depends_on:
-      - db-import
     commands:
       init:
-        - echo "*** intializing database ***"
-
-        # Create custom MySQL configuration
-        - |
-          cat << 'EOF' > /etc/mysql/conf.d/custom.cnf
-          [mysqld]
-          max_allowed_packet=1073741824
-          net_buffer_length=1048576
-          innodb_buffer_pool_size=1073741824
-          character_set_server=utf8mb4
-          collation_server=utf8mb4_bin
-          innodb_file_per_table=ON
-          wait_timeout=28800
-          EOF
-        
-        # Restart to apply new configuration
-        - service mariadb restart
-                
-        - mysql -e "SET GLOBAL character_set_server=utf8mb4;"
-        - mysql -e "SET GLOBAL collation_server=utf8mb4_bin;"
-        - mysql -e "SET GLOBAL innodb_file_per_table=ON;"
-        - mysql -e "SET GLOBAL wait_timeout=28800;"
+        - echo "*** intializing database ***"     
+      
+        - mysql -e "SET GLOBAL character_set_server=utf8mb4; \
+          SET GLOBAL collation_server=utf8mb4_bin; \
+          SET GLOBAL innodb_file_per_table=ON; \
+          SET GLOBAL wait_timeout=28800; \
+          SET GLOBAL max_allowed_packet=1073741824; \
+          SET GLOBAL net_buffer_length=1048576; \
+          SET GLOBAL innodb_buffer_pool_size=1073741824;"        
         - export MYSQL_ROOT_PASSWORD=${MOODLE_DBPASS}
         - export MYSQL_DATABASE=${MOODLE_DBNAME}
         - export MYSQL_USER=${MOODLE_DBUSER}
         - export MYSQL_PASSWORD=${MOODLE_DBPASS}
-        - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; FLUSH PRIVILEGES;"
+        - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; \
+          GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; \
+          FLUSH PRIVILEGES;"
 
-  db-import:
-    image: "tugboatqa/ubuntu:latest"
-    commands:
-      init:
         - |
           if [ "${GENERATE_TEST_DATA:-true}" = "false" ]; then
             # Install required tools
@@ -122,20 +105,6 @@ services:
             echo "Downloading database from S3..."
             aws s3 cp ${MOODLE_PREVIEW_DB_DOWNLOAD_URL} /tmp/database.sql.gz
             
-            # Wait for MySQL to be ready
-            # Set maximum wait time (in seconds)
-            MAX_WAIT=300  # 5 minutes
-            COUNTER=0
-            until mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} -e "SELECT 1"; do
-                COUNTER=$((COUNTER + 2))
-                if [ $COUNTER -gt $MAX_WAIT ]; then
-                    echo "Error: Could not connect to database after ${MAX_WAIT} seconds"
-                    exit 1  # Exit with error code
-                fi
-                echo "Waiting for database connection... ($COUNTER seconds elapsed)"
-                sleep 2
-            done
-
             # Verify MySQL settings
             echo "Verifying MySQL settings..."
             PACKET_SIZE=$(mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} -N -e "SELECT @@max_allowed_packet;")
@@ -196,7 +165,7 @@ services:
             
             # Clean up
             #rm /tmp/database.sql.gz
-            rm -f /tmp/database.sql.gz /tmp/import.log
+            #rm -f /tmp/database.sql.gz /tmp/import.log
             deactivate
             rm -rf /tmp/venv
 
