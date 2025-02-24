@@ -62,21 +62,23 @@ services:
     image: "tugboatqa/mariadb:10.11.8"
     commands:
       init:
-        - echo "*** intializing database ***"     
+        - echo "*** initializing database ***"     
       
-        - mysql -e "SET GLOBAL character_set_server=utf8mb4; \
-          SET GLOBAL collation_server=utf8mb4_bin; \
-          SET GLOBAL innodb_file_per_table=ON; \
-          SET GLOBAL wait_timeout=28800; \
-          SET GLOBAL max_allowed_packet=1073741824; \
-          SET GLOBAL net_buffer_length=1048576; \
+        - mysql -e "SET GLOBAL character_set_server=utf8mb4;
+          SET GLOBAL collation_server=utf8mb4_bin;
+          SET GLOBAL innodb_file_per_table=ON;
+          SET GLOBAL wait_timeout=28800;
+          SET GLOBAL max_allowed_packet=1073741824;
+          SET GLOBAL net_buffer_length=1048576;
           SET GLOBAL innodb_buffer_pool_size=1073741824;"        
+
         - export MYSQL_ROOT_PASSWORD=${MOODLE_DBPASS}
         - export MYSQL_DATABASE=${MOODLE_DBNAME}
         - export MYSQL_USER=${MOODLE_DBUSER}
         - export MYSQL_PASSWORD=${MOODLE_DBPASS}
-        - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME}; \
-          GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}'; \
+
+        - mysql -e "CREATE DATABASE IF NOT EXISTS ${MOODLE_DBNAME};
+          GRANT ALL PRIVILEGES ON moodle.* TO '${MOODLE_DBNAME}'@'%' IDENTIFIED BY '${MOODLE_DBPASS}';
           FLUSH PRIVILEGES;"
 
         - |
