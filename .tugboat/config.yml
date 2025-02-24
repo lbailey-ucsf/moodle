@@ -150,18 +150,18 @@ services:
             
             # Attempt import
             echo "Starting database import..."
-            if import_with_retry "/tmp/database.sql.gz"; then
-                echo "Database import successful"
-            else
-                echo "Error during import. Check logs for details."
-                echo "Last error from MySQL:"
-                tail -n 5 /tmp/import.log
-                exit 1
-            fi
+            #if import_with_retry "/tmp/database.sql.gz"; then
+            #    echo "Database import successful"
+            #else
+            #    echo "Error during import. Check logs for details."
+            #    echo "Last error from MySQL:"
+            #    tail -n 5 /tmp/import.log
+            #    exit 1
+            #fi
                         
             # Import the database
             #echo "Importing database..."
-            #gunzip -c /tmp/database.sql.gz | mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
+            gunzip /tmp/database.sql.gz | mysql -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
             #gunzip -l /tmp/database.sql.gz
             #mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}            
             
