@@ -113,12 +113,14 @@ services:
             echo "Current max_allowed_packet size: $PACKET_SIZE"                     
                       
             # Import the database
-            #echo "Importing database..."
-            gunzip /tmp/database.sql.gz | mysql -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
+            echo "Importing database..."
+            #gunzip /tmp/database.sql.gz | mysql -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
+            gunzip < /tmp/database.sql.gz | mysql -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}
             #gunzip -l /tmp/database.sql.gz
             #mysql -h db -u ${MOODLE_DBUSER} -p${MOODLE_DBPASS} ${MOODLE_DBNAME}            
             
             # Clean up
+            echo "Cleaning up..."
             #rm /tmp/database.sql.gz
             #rm -f /tmp/database.sql.gz /tmp/import.log
             deactivate
