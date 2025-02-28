@@ -25,7 +25,7 @@ jobs:
                 "destination":"moodle-ng-sandbox", 
                 "ref": "${{ github.ref }}", 
                 "pr_number": "${{ github.event.pull_request.number }}", 
-                "branch": "${{ github.ref }}", 
+                "branch": "${{ github.ref_name }}", 
                 "merged_by": "${{ github.event.pull_request.merged_by.login }}",
                 "title": "${{ github.event.pull_request.title }}",
                 "repository": "${{ github.repository }}"
