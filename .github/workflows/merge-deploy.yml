@@ -1,0 +1,32 @@
+name: UCSFCLE Merge Deploy
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - UCSFCLE_405_STABLE
+  
+  workflow_dispatch:
+  
+jobs:
+  trigger-deployment:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.repository == 'ucsf-education/moodle')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Branch Deployment
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
+          repository: ucsf-education/cle-devops
+          event-type: moodle-ng-sandbox-deploy
+          client-payload: >            
+            {
+                "deploy_type": "branch",
+                "destination":"moodle-ng-sandbox", 
+                "ref": "${{ github.ref }}", 
+                "pr_number": "${{ github.event.pull_request.number }}", 
+                "branch": "${{ github.ref }}", 
+                "merged_by": "${{ github.event.pull_request.merged_by.login }}",
+                "title": "${{ github.event.pull_request.title }}",
+                "repository": "${{ github.repository }}"
+            }
