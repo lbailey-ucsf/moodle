@@ -132,3 +132,27 @@ jobs:
 
       - name: Git status
         run: git status
+
+  TriggerSandboxDeploy:
+    if: >
+      github.event_name == 'push' &&
+      github.repository == 'ucsf-education/moodle' &&
+      github.ref_name == vars.SANDBOX_REF_NAME
+    name: Deploy to Sandbox
+    runs-on: ubuntu-latest
+    needs: [Grunt, PHPUnit]
+    steps:    
+      - name: Deploy Branch to Sandbox
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
+          repository: "ucsf-education/cle-devops"
+          event-type: "moodle-sandbox-deploy"
+          client-payload: >            
+            {
+                "deploy_type": "branch",
+                "deploy_branch": "${{ vars.SANDBOX_REF_NAME }}",
+                "deploy_ref": "${{ github.ref }}",
+                "destination":"moodel-sandbox", 
+                "repository": "${{ github.repository }}"
+            }

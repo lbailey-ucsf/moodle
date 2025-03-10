@@ -1,0 +1,71 @@
+name: Deploy to Sandbox
+
+on:
+
+  pull_request:
+    types: [closed]
+    branches:
+      - UCSFCLE_[0-9]+_STABLE
+
+  push:
+    branches:
+      - '*'
+  
+  workflow_dispatch:
+  
+env:
+  DEVOPS_REPO: ucsf-education/cle-devops
+  SANDBOX: moodle-sandbox
+  STAGE: moodle-stage
+  NG_STAGE: moodle-ng-stage
+  
+jobs:
+  
+  trigger-sandbox-deployment:
+    if: >
+      github.repository == 'ucsf-education/moodle' &&
+      (vars.SANDBOX_REF_NAME != '' || vars.SANDBOX_REF_NAME != 'UNSET') &&
+      github.ref_name == vars.SANDBOX_REF_NAME
+    name: Deploy to Sandbox
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Deploy Branch to Sandbox
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
+          repository: ${{ env.DEVOPS_REPO }}
+          event-type: "moodle-sandbox-deploy"
+          client-payload: >            
+            {
+                "deploy_type": "branch",
+                "deploy_branch": "${{ vars.SANDBOX_REF_NAME }}",
+                "deploy_ref": "${{ github.ref }}",
+                "destination":"${{ env.SANDBOX }}", 
+                "repository": "${{ github.repository }}"
+            }
+
+  trigger-staging-deployment:
+    if: >
+      github.repository == 'ucsf-education/moodle' && 
+      github.event.pull_request.merged == true && 
+      github.ref_name == github.event.repository.default_branch
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    steps:   
+      - name: Trigger Branch Deployment
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
+          repository: ${{ env.DEVOPS_REPO }}
+          event-type: "moodle-stage-deploy"
+          client-payload: >            
+            {
+                "deploy_type": "branch",
+                "deploy_branch": "${{ github.ref_name }}",
+                "deploy_ref": "${{ github.ref }}",
+                "destination": "${{ github.ref_name == github.event.repository.default_branch && env.STAGE || env.NG_STAGE }}", 
+                "pr_number": "${{ github.event.pull_request.number }}", 
+                "merged_by": "${{ github.event.pull_request.merged_by.login }}",
+                "title": "${{ github.event.pull_request.title }}",
+                "repository": "${{ github.repository }}"
+            }
