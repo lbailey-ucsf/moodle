@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Grunt, PHPUnit]
     steps:    
-      - name: Deploy Branch to Sandbox
+      - name: CLE DevOps Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
@@ -153,6 +153,6 @@ jobs:
                 "deploy_type": "branch",
                 "deploy_branch": "${{ vars.SANDBOX_REF_NAME }}",
                 "deploy_ref": "${{ github.ref }}",
-                "destination":"moodel-sandbox", 
+                "destination":"moodle-sandbox", 
                 "repository": "${{ github.repository }}"
             }

@@ -1,4 +1,4 @@
-name: UCSFCLE Staging Deployment
+name: UCSFCLE Moodle Staging Deployment
 
 on:
   pull_request:
@@ -21,11 +21,11 @@ jobs:
     if: >
       github.repository == 'ucsf-education/moodle' && 
       (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch')    
-    name: Deploy to Staging
+    name: Trigger Moodle Deploy to Staging Environment
     runs-on: ubuntu-latest
     
     steps:   
-      - name: Deploy Branch to Staging 
+      - name: CLE DevOps Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
@@ -33,12 +33,10 @@ jobs:
           event-type: "moodle-stage-deploy"
           client-payload: >            
             {
-                "deploy_type": "branch",
-                "deploy_branch": "${{ github.ref_name }}",
-                "deploy_ref": "${{ github.ref }}",
+                "deploy_type": "branch",        
+                "deploy_ref": "${{ github.ref_name }}",
                 "destination": "${{ github.event_name == 'workflow_dispatch' && inputs.destination || (github.ref_name == github.event.repository.default_branch && 'moodle-stage' || 'moodle-ng-stage') }}", 
                 "pr_number": "${{ github.event.pull_request.number }}", 
                 "merged_by": "${{ github.event.pull_request.merged_by.login }}",
-                "title": "${{ github.event.pull_request.title }}",
-                "repository": "${{ github.repository }}"
+                "title": "${{ github.event.pull_request.title }}"
             }
