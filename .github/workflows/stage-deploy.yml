@@ -17,15 +17,15 @@ on:
           - 'moodle-ng-stage'
 
 jobs:
-  trigger-staging-deployment:
+  dispatch-staging-deployment:
     if: >
       github.repository == 'ucsf-education/moodle' && 
       (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch')    
-    name: Trigger Moodle Deploy to Staging Environment
+    name: Dispatch Moodle Deploy to Staging Environment
     runs-on: ubuntu-latest
     
     steps:   
-      - name: CLE DevOps Repository Dispatch
+      - name: Send Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.DEPLOYMENT_AUTOMATION_PAT }}
