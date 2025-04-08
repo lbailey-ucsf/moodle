@@ -9,7 +9,7 @@ services:
       init:
         - echo "****** initializing webserver *****"
         - echo "****** installing required php extensions *****"
-        - apt-get update && apt-get install -y libzip-dev libldap2-dev libmemcached-dev libmsgpack-dev libpspell-dev unzip git libxml2-dev libcurl4-openssl-dev libxslt-dev php-xdebug
+        - apt-get update && apt-get install -y libzip-dev libldap2-dev libmemcached-dev libmsgpack-dev libpspell-dev unzip git libxml2-dev libcurl4-openssl-dev libxslt-dev
         - pecl install redis solr
         - docker-php-ext-install mysqli zip soap intl exif ldap ffi ftp gettext pspell shmop sockets sysvmsg sysvsem sysvshm xsl
         - docker-php-ext-enable redis solr
