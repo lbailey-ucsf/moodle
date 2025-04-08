@@ -42,7 +42,7 @@ services:
           --dataroot=/var/www/moodledata \
           --dbtype=${MOODLE_DBTYPE} --dbhost=db --dbname=${MOODLE_DBNAME} --dbuser=${MOODLE_DBUSER} --dbpass=${MOODLE_DBPASS} --prefix=m_ \
           --adminuser=${MOODLE_DBADMIN_NAME} --adminpass=${MOODLE_DBADMIN_PASS} \
-          --fullname=${$TUGBOAT_PREVIEW_NAME} --shortname=PREVIEW --adminemail=${MOODLE_ADMIN_EMAIL}
+          --fullname=${TUGBOAT_PREVIEW_NAME} --shortname=PREVIEW --adminemail=${MOODLE_ADMIN_EMAIL}
         - chown -R root $DOCROOT
       
       online:
