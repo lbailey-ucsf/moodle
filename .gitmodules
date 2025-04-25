@@ -26,8 +26,8 @@
 [submodule "blocks/checklist"]
 	path = blocks/checklist
 	url = https://github.com/davosmith/moodle-block_checklist
-	branch = master
-	tag = 3.4.3.2
+	branch = MOODLE_400_STABLE
+	tag = 4.0.0.0
 [submodule "blocks/course_recent"]
 	path = blocks/course_recent
 	url = https://github.com/ucsf-education/moodle-block-course_recent
@@ -61,7 +61,7 @@
 	path = lib/editor/tiny/plugins/fontcolor
 	url = https://github.com/bfh/moodle-tiny_fontcolor
 	branch = main
-	tag = V0.8
+	tag = V0.9
 [submodule "local/maintenance_livecheck"]
 	path = local/maintenance_livecheck
 	url = https://github.com/moodle-an-hochschulen/moodle-local_maintenance_livecheck
@@ -87,8 +87,8 @@
 [submodule "mod/checklist"]
 	path = mod/checklist
 	url = https://github.com/davosmith/moodle-checklist
-	branch = master
-	tag = 4.1.0.3
+	branch = MOODLE_401_STABLE
+	tag = 4.1.0.5
 [submodule "mod/choicegroup"]
 	path = mod/choicegroup
 	url = https://github.com/ndunand/moodle-mod_choicegroup
@@ -116,7 +116,7 @@
 	path = mod/quiz/report/archive
 	url = https://github.com/bfh/moodle-quiz_archive
 	branch = main
-	tag = v4.5-r2
+	tag = v5.0-r1
 [submodule "mod/turnitintooltwo"]
 	path = mod/turnitintooltwo
 	url = https://github.com/ucsf-education/moodle-mod_turnitintooltwo
